@@ -1,5 +1,5 @@
 # LeetCode Python
-## Two Sum
+## 2.Two Sum
 題目提供：
 ```python
 class Solution(object):
@@ -30,3 +30,47 @@ class Solution(object):
 
 ` for i, num in enurmerate(nums): `這段語法中，每次迭代時，enumerate(nums) 返回的一對（索引和值）會被自動解包成兩個變量：i 和 num。
 ex:`[(0, nums[0]), (1, nums[1]).....]`
+
+## 9.Palindrome Number
+Given an integer `x`, return true if `x` is a palindrome, and false otherwise.
+
+Example 1:
+Input: x = 121
+Output: true
+
+Input: x = -121
+Output: false
+
+### 方法一：反轉全部數字
+```python
+def isPalindrome(self, x:int) -> bool:
+    # 檢查數字是否小於0或結尾是0的數
+    if x <= 0 or  (x % 10 == 0 and x !=0):
+        return False
+    # 反轉數字
+    reverseX = 0
+    temp = x
+    while temp != 0:
+        digit = temp % 10
+        reverseX = reversX * 10 + digit
+        temp //= 10  
+    
+    return reverseX == x
+```
+
+### 方法二：反轉一半數字
+```python
+def isPalindrome(self, x:int) -> bool:
+    # 檢查數字是否小於0或結尾是0的數
+    if x <= 0 or  (x % 10 == 0 and x !=0):
+        return False
+    # 反轉數字
+    reverseHalf = 0
+    temp = x
+    while temp > reverseHalf:
+        digit = temp % 10
+        reverseHalf = reverseHalf * 10 + digit
+        temp //= 10  
+    # 當數字長度為奇數時，reversedHalf // 10 去掉中間數字
+    return reverseHalf == temp or reverseHalf == temp // 10
+```
