@@ -11,3 +11,20 @@ class Solution(object):
 `target: int`: 另一個輸入參數，target 是一個整數，表示我們要查找的兩個數字的和。
 
 `-> List[int]`: 函數的返回類型註釋。`->` 表示函數的返回類型。`List[int]` 表示這個函數會返回一個由整數組成的列表。這有助於了解函數的輸出是什麼類型，並且能夠進行靜態類型檢查。
+### 解答
+```python
+    def TwoSum(self, nums:List[int], target:int) -> List[int]:
+        # 創建字典
+        num_map = {}
+        # 檢查nums list裡的元素有沒有相加等於target的
+        for i, num in enurmerate(nums):
+            complement = target - num # 計算當前補數
+            if complement in num_map:# 檢查補數市府在num_map字典裡
+            # 如果補數存在字典裡，回傳補數對應的索引和當前數字索引
+                return [num_map[complement], i]
+            # 如果不存在，儲存當前數字和索引於字典裡
+            num_map[num] = i
+        # 如果都沒有，回傳空的list
+        return []
+```
+` for i, num in enurmerate(nums): `   
