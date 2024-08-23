@@ -27,4 +27,6 @@ class Solution(object):
         # 如果都沒有，回傳空的list
         return []
 ```
-` for i, num in enurmerate(nums): `   
+
+` for i, num in enurmerate(nums): `這段語法中，每次迭代時，enumerate(nums) 返回的一對（索引和值）會被自動解包成兩個變量：i 和 num。
+ex:`[(0, nums[0]), (1, nums[1]).....]`
