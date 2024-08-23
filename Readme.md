@@ -71,6 +71,6 @@ def isPalindrome(self, x:int) -> bool:
         digit = temp % 10
         reverseHalf = reverseHalf * 10 + digit
         temp //= 10  
-    # 當數字長度為奇數時，reversedHalf // 10 去掉中間數字
+    # 當數字長度為奇數時，reverseHalf // 10 去掉中間數字
     return reverseHalf == temp or reverseHalf == temp // 10
 ```
