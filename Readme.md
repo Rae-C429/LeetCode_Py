@@ -41,6 +41,7 @@ Output: true
 Input: x = -121
 Output: false
 
+
 ### 方法一：反轉全部數字
 ```python
 def isPalindrome(self, x:int) -> bool:
@@ -73,4 +74,56 @@ def isPalindrome(self, x:int) -> bool:
         temp //= 10  
     # 當數字長度為奇數時，reverseHalf // 10 去掉中間數字
     return reverseHalf == temp or reverseHalf == temp // 10
+```
+
+## 13.Roman to Integer
+Symbol       Value
+I             1
+V             5
+X             10
+L             50
+C             100
+D             500
+M             1000
+
+Example 1:
+Input: s = "III" =>1+1+1
+Output: 3
+
+Example 2:
+Input: s = "LVIII"=>3+5+10
+Output: 58
+題目要求將提供的羅馬數字(`string`)成阿拉伯數字(`int`)，在羅馬字中出小數出線在前面時代表要用減的 ex:IV = 5-1 =4
+
+### 解題想法
+1. 要先做出一個羅馬數字`dict`
+2. 字串是字元序列組成的，利用索引直來比大小
+3. 注意！字串後一個字元是沒有東西好比的
+
+### 解答
+```python
+class Solution:
+    def romanToInt(self, s: str) -> int:
+        # 創建羅馬數字dict
+        romanNum = {
+            "I": 1,
+            "V": 5,
+            "X": 10,
+            "L": 50,
+            "C": 100,
+            "D": 500,
+            "M": 1000
+        }
+        intNum = 0
+        # 檢查羅馬數字大小
+        for i in range(len(s)):
+            # 如果前面數字小於後面數字
+            if romanNum[s[i]] < romanNum[s[i]] and i < len(s):
+                intNum = intNum - romanNum[s[i]]
+
+            # 一般情況
+            else:
+                intNum = intNum + romanNum[s[i]]
+
+            return intNum
 ```
