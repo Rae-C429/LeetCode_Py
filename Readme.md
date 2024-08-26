@@ -1,5 +1,5 @@
 # LeetCode Python
-## 2.Two Sum
+## 1.Two Sum
 題目提供：
 ```python
 class Solution(object):
@@ -126,4 +126,61 @@ class Solution:
                 intNum = intNum + romanNum[s[i]]
 
             return intNum
+```
+
+## 2.Add Two Numbers(Med.)
+給您兩個表示兩個非負整數的非空鍊錶。這些數字以相反的順序存儲，並且每個節點都包含一個數字。將兩個數字相加並以鍊錶形式傳回總和。
+
+Example 1
+![alt text](image.png)
+
+Input: l1 = [2,4,3], l2 = [5,6,4]
+Output: [7,0,8]
+Explanation: 342 + 465 = 807.
+
+Example 2:
+Input: l1 = [0], l2 = [0]
+Output: [0]
+
+Example 3:
+Input: l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]
+Output: [8,9,9,9,0,0,0,1]
+
+### 解答
+```python
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        # Optional 是 typing 模塊中的一个泛型類型，表示某個變量要麽是指定的類型（這裡是 ListNode），要麽是 None。
+        # 創建一個虛擬的節點頭
+        dummyHead = ListNode(0)
+        # 創建指針只先目前位置
+        current = dummyHead
+        # 初始化進位
+        carry = 0
+        # 計算l1,l2的值
+        while l1 is not None or l2 is not None:
+            x = l1.val if is not None else 0
+            y = l2.val if is not None else 0
+            sum = x + y + carry
+            # 進位計算
+            carry = carry // 10
+            # 將計算出的答案增加至下一個節點
+            current.next = ListNode(sum % 10)
+            current = current.next
+            # 前往l1,l2下一節點
+            if l1 is not None:
+                l1 = l1.next 
+            if l2 is not None:
+                l2 = l2.next
+
+            if carry > 0:
+                current.next = ListCode(carry)
+                
+            return dummyHead.next
+
 ```
