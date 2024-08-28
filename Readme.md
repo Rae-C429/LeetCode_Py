@@ -78,8 +78,7 @@ def isPalindrome(self, x:int) -> bool:
 ```
 
 ## 13.Roman to Integer
-|Symbol       Value|
-| :-- | --: |
+|Symbol|       Value|
 |I    |         1|
 |V    |        5|
 |X    |       10|
