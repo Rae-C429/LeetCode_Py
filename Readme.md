@@ -34,11 +34,12 @@ ex:`[(0, nums[0]), (1, nums[1]).....]`
 ## 9.Palindrome Number
 Given an integer `x`, return true if `x` is a palindrome, and false otherwise.
 
-Example 1:
-Input: x = 121
+Example 1:\
+Input: x = 121\
 Output: true
 
-Input: x = -121
+Example 2:\
+Input: x = -121\
 Output: false
 
 
@@ -77,22 +78,22 @@ def isPalindrome(self, x:int) -> bool:
 ```
 
 ## 13.Roman to Integer
-Symbol       Value
-I             1
-V             5
-X             10
-L             50
-C             100
-D             500
-M             1000
+|Symbol       Value|
+|I             1|
+|V             5|
+|X             10|
+|L             50|
+|C             100|
+|D             500|
+|M             1000|
 
-Example 1:
-Input: s = "III" =>1+1+1
+Example 1:\
+Input: s = "III" =>1+1+1\
 Output: 3
 
-Example 2:
-Input: s = "LVIII"=>3+5+10
-Output: 58
+Example 2:\
+Input: s = "LVIII"=>3+5+10\
+Output: 58\
 題目要求將提供的羅馬數字(`string`)成阿拉伯數字(`int`)，在羅馬字中出小數出線在前面時代表要用減的 ex:IV = 5-1 =4
 
 ### 解題想法
@@ -131,19 +132,19 @@ class Solution:
 ## 2.Add Two Numbers(Med.)
 給您兩個表示兩個非負整數的非空鍊錶。這些數字以相反的順序存儲，並且每個節點都包含一個數字。將兩個數字相加並以鍊錶形式傳回總和。
 
-Example 1
+Example 1\
 ![alt text](image.png)
 
-Input: l1 = [2,4,3], l2 = [5,6,4]
-Output: [7,0,8]
+Input: l1 = [2,4,3], l2 = [5,6,4]\
+Output: [7,0,8]\
 Explanation: 342 + 465 = 807.
 
-Example 2:
-Input: l1 = [0], l2 = [0]
+Example 2:\
+Input: l1 = [0], l2 = [0]\
 Output: [0]
 
-Example 3:
-Input: l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]
+Example 3:\
+Input: l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]\
 Output: [8,9,9,9,0,0,0,1]
 
 ### 解答
@@ -188,13 +189,13 @@ class Solution:
 ## 14.Longest Common Prefix
 Write a function to find the longest common prefix string amongst an array of strings.If there is no common prefix, return an empty string "".
 
-Example 1:
-Input: strs = ["flower","flow","flight"]
+Example 1:\
+Input: strs = ["flower","flow","flight"]\
 Output: "fl"
 
-Example 2:
-Input: strs = ["dog","racecar","car"]
-Output: ""
+Example 2:\
+Input: strs = ["dog","racecar","car"]\
+Output: ""\
 Explanation: There is no common prefix among the input strings.
 
 ### 解題想法
@@ -222,27 +223,27 @@ class Solution:
 
 ### 20.Valid Parentheses
 
-Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.\
 An input string is valid if:
 
-Open brackets must be closed by the same type of brackets.
-Open brackets must be closed in the correct order.
+Open brackets must be closed by the same type of brackets.\
+Open brackets must be closed in the correct order.\
 Every close bracket has a corresponding open bracket of the same type.
  
-Example 1:
-Input: s = "()"
+Example 1:\
+Input: s = "()"\
 Output: true
 
-Example 2:
-Input: s = "()[]{}"
+Example 2:\
+Input: s = "()[]{}"\
 Output: true
 
-Example 3:
-Input: s = "(]"
+Example 3:\
+Input: s = "(]"\
 Output: false
 
-Example 4:
-Input: s = "([])"
+Example 4:\
+Input: s = "([])"\
 Output: true
 
 ### 解題想法
@@ -272,19 +273,19 @@ class Solution:
 
 Given a string s, find the length of the longest substring without repeating characters.
 
-Example 1:
-Input: s = "abcabcbb"
+Example 1:\
+Input: s = "abcabcbb"\
 Output: 3
 Explanation: The answer is "abc", with the length of 3.
 
-Example 2:
-Input: s = "bbbbb"
-Output: 1
+Example 2:\
+Input: s = "bbbbb"\
+Output: 1\
 Explanation: The answer is "b", with the length of 1.
 
-Example 3:
-Input: s = "pwwkew"
-Output: 3
+Example 3:\
+Input: s = "pwwkew"\
+Output: 3\
 Explanation: The answer is "wke", with the length of 3. Notice that the answer must be a substring, "pwke" is a subsequence and not a substring.
 
 ### 解題想法
