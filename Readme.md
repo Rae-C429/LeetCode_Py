@@ -246,8 +246,8 @@ Input: s = "([])"
 Output: true
 
 ### 解題想法
-1. 括號都是成對的
-2. 利用stack先進後出
+1. 括號都是成對的，利用`dict` key:value
+2. 利用stack先進後出，將左括號存入
 
 ### 解答
 ```python
@@ -260,11 +260,11 @@ class Solution:
             if char not in par:
                 stack.append(char)
             else:
-                top = stack.pop()if stack else False
+                top = stack.pop() if stack else False
                 if top != par[char]:
                     return False
                 
         return not stack 
 ```
- 
+`if char not in par:` 用來檢查key，若想檢查value請用`par.value()`
  
