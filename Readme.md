@@ -118,7 +118,7 @@ class Solution:
         # 檢查羅馬數字大小
         for i in range(len(s)):
             # 如果前面數字小於後面數字
-            if romanNum[s[i]] < romanNum[s[i]] and i < len(s):
+            if romanNum[s[i]] < romanNum[s[i+1]] and i < len(s):
                 intNum = intNum - romanNum[s[i]]
 
             # 一般情況
@@ -184,3 +184,87 @@ class Solution:
             return dummyHead.next
 
 ```
+
+## 14.Longest Common Prefix
+Write a function to find the longest common prefix string amongst an array of strings.If there is no common prefix, return an empty string "".
+
+Example 1:
+Input: strs = ["flower","flow","flight"]
+Output: "fl"
+
+Example 2:
+Input: strs = ["dog","racecar","car"]
+Output: ""
+Explanation: There is no common prefix among the input strings.
+
+### 解題想法
+1. 取第一個值作為比較對象
+2. 注意字串長度
+3. 先整理在比較
+
+### 解答
+```python
+class Solution:
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+        if strs is None:
+            return ""
+        strs = sorted(strs)
+        prefix = ""
+        first = strs[0]
+        last = strs[-1]
+        for i in range(min(len(first),len(last))):
+            if first[i] != last[i]:
+                return prefix 
+            prefix += first[i]
+        return prefix
+```
+`sorted()` 會先按照字母順序，如果字母相同長度較短的會在前面
+
+### 20.Valid Parentheses
+
+Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+An input string is valid if:
+
+Open brackets must be closed by the same type of brackets.
+Open brackets must be closed in the correct order.
+Every close bracket has a corresponding open bracket of the same type.
+ 
+Example 1:
+Input: s = "()"
+Output: true
+
+Example 2:
+Input: s = "()[]{}"
+Output: true
+
+Example 3:
+Input: s = "(]"
+Output: false
+
+Example 4:
+Input: s = "([])"
+Output: true
+
+### 解題想法
+1. 括號都是成對的
+2. 利用stack先進後出
+
+### 解答
+```python
+class Solution:
+    def isValid(self, s: str) -> bool:
+        stack = []
+        par = {")":"(", "}":"{", "]":"["}
+
+        for char in s:
+            if char not in par:
+                stack.append(char)
+            else:
+                top = stack.pop()if stack else False
+                if top != par[char]:
+                    return False
+                
+        return not stack 
+```
+ 
+ 
