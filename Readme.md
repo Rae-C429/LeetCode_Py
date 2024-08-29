@@ -323,3 +323,81 @@ for right in range(len(s)):
                 sub.remove(left)
                 left += 1            
 ```
+
+## 21.Merge Two Sorted Lists
+
+You are given the heads of two sorted linked lists list1 and list2.\
+Merge the two lists into one sorted list. The list should be made by splicing together the nodes of the first two lists.\
+Return the head of the merged linked list.
+
+Example 1:
+![alt text](image-1.png)
+Input: list1 = [1,2,4], list2 = [1,3,4]\
+Output: [1,1,2,3,4,4]
+
+Example 2:\
+Input: list1 = [], list2 = []\
+Output: []
+
+Example 3:\
+Input: list1 = [], list2 = [0]\
+Output: [0]
+
+### 解答
+```python
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        # 創建一個ListNode用來儲存整理好的資料
+        dummy = ListNode(0)
+        current = dummy # 將指針指向虛頭
+ 
+        while list1 and list2:
+            if list1.val < list2.val:
+                current.next = list1
+                list1 = list1.next 
+            else:
+                current.next = list2
+                list2 = list2.next 
+            current = current.next
+        if list1:
+            current.next = list1
+        elif list2:
+            current.next = list2
+
+        return dummy.next
+```
+
+## 26.Remove Duplicates from Sorted Array
+
+Example 1:\
+Input: nums = [1,1,2]\
+Output: 2, nums = [1,2,_]\
+Explanation: Your function should return k = 2, with the first two elements of nums being 1 and 2 respectively.\
+It does not matter what you leave beyond the returned k (hence they are underscores).
+
+Example 2:\
+Input: nums = [0,0,1,1,1,2,2,3,3,4]\
+Output: 5, nums = [0,1,2,3,4,_,_,_,_,_]\
+Explanation: Your function should return k = 5, with the first five elements of nums being 0, 1, 2, 3, and 4 respectively.\
+It does not matter what you leave beyond the returned k (hence they are underscores).
+
+### 解題想法
+與 14.Longest Common Prefix用到的法類似
+
+### 解答
+```python
+class Solution:
+    def removeDuplicates(self, nums: List[int]) -> int:
+        slow = 0
+        for fast in range (1,len(nums)):
+            if nums[slow]!= nums[fast]:
+                slow += 1
+                nums[slow] = nums[fast] 
+            
+        return slow + 1
+```
