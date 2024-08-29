@@ -1,5 +1,5 @@
 # LeetCode Python
-## 1.Two Sum
+## 1. Two Sum
 題目提供：
 ```python
 class Solution(object):
@@ -31,7 +31,7 @@ class Solution(object):
 ` for i, num in enurmerate(nums): `這段語法中，每次迭代時，enumerate(nums) 返回的一對（索引和值）會被自動解包成兩個變量：i 和 num。
 ex:`[(0, nums[0]), (1, nums[1]).....]`
 
-## 9.Palindrome Number
+## 9. Palindrome Number
 Given an integer `x`, return true if `x` is a palindrome, and false otherwise.
 
 Example 1:\
@@ -77,7 +77,7 @@ def isPalindrome(self, x:int) -> bool:
     return reverseHalf == temp or reverseHalf == temp // 10
 ```
 
-## 13.Roman to Integer
+## 13. Roman to Integer
 |Symbol|   Value|
 |------|--------|
 |I     |       1|
@@ -130,7 +130,7 @@ class Solution:
             return intNum
 ```
 
-## 2.Add Two Numbers(Med.)
+## 2. Add Two Numbers(Med.)
 給您兩個表示兩個非負整數的非空鍊錶。這些數字以相反的順序存儲，並且每個節點都包含一個數字。將兩個數字相加並以鍊錶形式傳回總和。
 
 Example 1\
@@ -187,7 +187,7 @@ class Solution:
 
 ```
 
-## 14.Longest Common Prefix
+## 14. Longest Common Prefix
 Write a function to find the longest common prefix string amongst an array of strings.If there is no common prefix, return an empty string "".
 
 Example 1:\
@@ -270,7 +270,7 @@ class Solution:
 ```
 `if char not in par:` 用來檢查key，若想檢查value請用`par.value()`
  
- ### 3.Longest Substring Without Repeating Characters(med)
+## 3. Longest Substring Without Repeating Characters(med)
 
 Given a string s, find the length of the longest substring without repeating characters.
 
@@ -324,7 +324,7 @@ for right in range(len(s)):
                 left += 1            
 ```
 
-## 21.Merge Two Sorted Lists
+## 21. Merge Two Sorted Lists
 
 You are given the heads of two sorted linked lists list1 and list2.\
 Merge the two lists into one sorted list. The list should be made by splicing together the nodes of the first two lists.\
@@ -372,7 +372,7 @@ class Solution:
         return dummy.next
 ```
 
-## 26.Remove Duplicates from Sorted Array
+## 26. Remove Duplicates from Sorted Array
 
 Example 1:\
 Input: nums = [1,1,2]\
@@ -387,7 +387,7 @@ Explanation: Your function should return k = 5, with the first five elements of 
 It does not matter what you leave beyond the returned k (hence they are underscores).
 
 ### 解題想法
-與 14.Longest Common Prefix用到的法類似
+與 Longest Substring Without Repeating Character
 
 ### 解答
 ```python
@@ -400,4 +400,35 @@ class Solution:
                 nums[slow] = nums[fast] 
             
         return slow + 1
+```
+
+## 7. Reverse Integer
+
+Given a signed 32-bit integer x, return x with its digits reversed. If reversing x causes the value to go outside the signed 32-bit integer range [-231, 231 - 1], then return 0.
+
+Example 1:\
+Input: x = 123\
+Output: 321
+
+Example 2:\
+Input: x = -123\
+Output: -321
+
+Example 3:\
+Input: x = 120\
+Output: 21
+
+```python
+class Solution:
+    def reverse(self, x: int) -> int:
+        n =  abs(x) if x < 0 else x
+        rev = 0
+        while n:
+            rev = rev * 10 + n % 10
+            n = n // 10
+            if 2**31-1 < rev: 
+                return 0
+
+        rev = rev if x > 0 else -rev
+        return rev
 ```
