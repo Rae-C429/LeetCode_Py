@@ -432,3 +432,132 @@ class Solution:
         rev = rev if x > 0 else -rev
         return rev
 ```
+
+## 15. 3Sum
+Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
+
+Notice that the solution set must not contain duplicate triplets.
+
+Example 1:\
+Input: nums = [-1,0,1,2,-1,-4]\
+Output: [[-1,-1,2],[-1,0,1]]\
+Explanation: \
+nums[0] + nums[1] + nums[2] = (-1) + 0 + 1 = 0.\
+nums[1] + nums[2] + nums[4] = 0 + 1 + (-1) = 0.\
+nums[0] + nums[3] + nums[4] = (-1) + 2 + (-1) = 0.\
+The distinct triplets are [-1,0,1] and [-1,-1,2].\
+Notice that the order of the output and the order of the triplets does not matter.
+
+Example 2:\
+Input: nums = [0,1,1]\
+Output: []\
+Explanation: The only possible triplet does not sum up to 0.
+
+Example 3:\
+Input: nums = [0,0,0]\
+Output: [[0,0,0]]\
+Explanation: The only possible triplet sums up to 0.
+
+### 解題方法(med.)
+捕魚法，不要用2sum找補數會漏找
+
+## 解答
+```python
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        tri = []
+        nums = sorted(nums)
+
+        for i in range(len(nums)-2):
+            # 檢查跟前一個有沒有相同
+            # 不要跟下一個比不然會有漏網之魚
+            if i > 0 and nums[i] == nums[i-1]:
+                # print(i,"\n")
+                continue
+            left = i+1
+            right = len(nums)-1
+            while left < right:
+                total = nums[i] + nums[left] + nums[right]
+                if total < 0:
+                    left+=1
+                elif total > 0:
+                    right-=1
+                else:
+                    tri.append([nums[i], nums[left], nums[right]])
+                    # 檢查框框內有沒有重複的，有的話要一直往內縮
+                    while left < right and nums[left]==nums[left+1]:
+                        left+=1
+                    while left < right and nums[right]==nums[right-1]:
+                        right-=1
+                    left+=1
+                    right-=1
+        return tri
+```
+
+## 35. Search Insert Position
+
+Given a sorted array of distinct integers and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.
+
+You must write an algorithm with O(log n) runtime complexity.
+
+Example 1:\
+Input: nums = [1,3,5,6], target = 5\
+Output: 2
+
+Example 2:\
+Input: nums = [1,3,5,6], target = 2\
+Output: 1
+
+Example 3:\
+Input: nums = [1,3,5,6], target = 7\
+Output: 4
+### 解題想法
+使用二分法
+
+### 解答
+```python
+class Solution:
+    def searchInsert(self, nums: List[int], target: int) -> int:
+        left = 0
+        right = len(nums)-1
+        # 設定邊界一定要設在有效索引內
+        while left <= right: #設定條件要注意
+            mid = left+(right-left)//2
+            if target < nums[mid]:
+                right = mid-1
+            elif target > nums[mid]:
+                left = mid + 1
+            else:
+                return mid
+        return left
+```
+## 53. Maximum Subarray
+Given an integer array nums, find the subarray with the largest sum, and return its sum.
+
+Example 1:
+Input: nums = [-2,1,-3,4,-1,2,1,-5,4]\
+Output: 6\
+Explanation: The subarray [4,-1,2,1] has the largest sum 6.
+
+Example 2:\
+Input: nums = [1]\
+Output: 1\
+Explanation: The subarray [1] has the largest sum 1.
+
+Example 3:\
+Input: nums = [5,4,-1,7,8]\
+Output: 23\
+Explanation: The subarray [5,4,-1,7,8] has the largest sum 23.
+
+### 解答
+```python
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        currentSum = nums[0]
+        maxSum = nums[0]
+
+        for num in nums[1:0]:
+            currentSum = max(num, currentSum+nums)
+            maxSum = max(maxSum,currentSum)
+        return maxSum = nums[0]
+```
