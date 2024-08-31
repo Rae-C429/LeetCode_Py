@@ -556,8 +556,83 @@ class Solution:
         currentSum = nums[0]
         maxSum = nums[0]
 
-        for num in nums[1:0]:
-            currentSum = max(num, currentSum+nums)
+        for num in nums[1:]:
+            currentSum = max(num, currentSum+num)
             maxSum = max(maxSum,currentSum)
         return maxSum = nums[0]
+```
+
+### 83. Remove Duplicates from Sorted List
+Given the head of a sorted linked list, delete all duplicates such that each element appears only once. Return the linked list sorted as well.
+
+Example 1:\
+![alt text](image-2.png)
+Input: head = [1,1,2]\
+Output: [1,2]
+
+Example 2:\
+![alt text](image-3.png)
+Input: head = [1,1,2,3,3]\
+Output: [1,2,3]
+
+### 解題方法
+利用指針current，當相鄰兩束相同時要跳過，不同時指針向下過移動。
+
+### 解答
+```python
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:
+
+        current = head
+        if current is None:
+            return head
+            
+        while current.next:
+            if current.next.val  == current.val:
+                current.next = current.next.next
+
+            elif current.next.val != current.val:
+                current = current.next
+        
+            
+        return head
+```
+
+## 67. Add Binary
+Given two binary strings a and b, return their sum as a binary string.
+
+Example 1:\
+Input: a = "11", b = "1"\
+Output: "100"
+
+Example 2:\
+Input: a = "1010", b = "1011"\
+Output: "10101"
+
+### 解方法
+注意方向索引值最大的是個位數
+
+## 解答
+```python
+class Solution:
+    def addBinary(self, a: str, b: str) -> str:
+        result = []
+        carry = 0
+        i, j = len(a) - 1, len(b) - 1  
+        
+        while i >= 0 or j >= 0 or carry:
+            bit_a = int(a[i]) if i >= 0 else 0
+            bit_b = int(b[j]) if j >= 0 else 0
+            total = bit_a + bit_b + carry
+            carry = (total)//2
+            result.append(str(total%2))
+            i-=1
+            j-=1
+
+        return "".join(reversed(result))
 ```
