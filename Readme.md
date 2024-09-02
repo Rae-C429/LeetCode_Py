@@ -636,9 +636,26 @@ class Solution:
 
         return "".join(reversed(result))
 ```
-## 19. Remove Nth Node From End of List
+## 19. Remove Nth Node From End of List(med.)
 
+Given the head of a linked list, remove the nth node from the end of the list and return its head.
 
+Example 1:\
+Input: head = [1,2,3,4,5], n = 2\
+Output: [1,2,3,5]
+
+Example 2:\
+Input: head = [1], n = 1\
+Output: []
+
+Example 3:\
+Input: head = [1,2], n = 1\
+Output: [1]
+
+### 解題方法
+使用雙指針，注意初始化值，設為虛擬化頭解除所有煩惱
+
+### 解答
 ```python
 # Definition for singly-linked list.
 # class ListNode:
@@ -662,4 +679,110 @@ class Solution:
         slow.next = slow.next.next
 
         return dummy.next
+```
+
+## 56. Merge Intervals(med.)
+Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping intervals, and return an array of the non-overlapping intervals that cover all the intervals in the input.
+
+Example 1:\
+Input: intervals = [[1,3],[2,6],[8,10],[15,18]]\
+Output: [[1,6],[8,10],[15,18]]\
+Explanation: Since intervals [1,3] and [2,6] overlap, merge them into [1,6].
+
+Example 2:\
+Input: intervals = [[1,4],[4,5]]\
+Output: [[1,5]]\
+Explanation: Intervals [1,4] and [4,5] are considered overlapping.
+
+### 解答
+```python
+class Solution:
+    def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+        # 創建堆疊
+        stack = []
+        intervals = sorted(intervals)
+        # 將第一個子列亞入堆疊
+        stack.append(intervals[0])
+        for i in range(1,len(intervals)):
+            # 當前[start,end]
+            b1 = intervals[i][0]
+            b2 = intervals[i][1]
+            # stack中top[start,end]
+            a1 = stack[-1][0]
+            a2 = stack[-1][1]
+            print(a1,a2,b1,b2)
+            # 如果重疊
+            if a2 >= b1:
+                stack[-1][1] = max(a2, b2)
+                # 要嘛用pop,不要用a2改!
+            else:
+                stack.append(intervals[i])
+        return stack
+```
+
+## 136. Single Number
+
+Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.
+
+You must implement a solution with a linear runtime complexity and use only constant extra space.
+
+Example 1:
+Input: nums = [2,2,1]\
+Output: 1
+
+Example 2:\
+Input: nums = [4,1,2,1,2]\
+Output: 4
+
+Example 3:\
+Input: nums = [1]\
+Output: 1
+
+```python
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        seen = {}
+        # 預設值為1如果重複+1
+        for i in nums:
+            if i in seen:
+                seen[i] +=1  
+            else:
+                seen[i] = 1
+        for key, val in seen.items():
+            if val == 1: 
+                return key
+```
+
+## 101. Symmetric Tree
+Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
+
+Example 1:\
+Input: root = [1,2,2,3,4,4,3]\
+Output: true
+
+Example 2:
+Input: root = [1,2,2,null,3,null,3]\
+Output: false
+
+### 解答
+```python
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isSymmetric(self, root: Optional[TreeNode]) -> bool:
+        if not root:
+                return False
+        def isMirror(left:TreeNode,right:TreeNode) ->bool:
+            # 檢查最底層
+            if not left and not right:
+                return True 
+            if not left or not right:
+                return False
+            return left.val == right.val and isMirror(left.left, right.right) and isMirror(right.left,left.right)
+            
+        return isMirror(root.left, root.right)
 ```
