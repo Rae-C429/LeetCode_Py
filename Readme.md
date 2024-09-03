@@ -884,6 +884,9 @@ Explanation: There are three ways to climb to the top.
 ### 解題方法
 可以用迭代的但會超出時間\
 `f(n) = f(n-1) + f(n-2)`
+當只有一個階梯`n=1`，只有1種方法\
+當`n=2`，有2種方法
+
 ```python
 class Solution:
     def climbStairs(self, n: int) -> int:
