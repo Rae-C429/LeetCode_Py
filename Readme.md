@@ -786,3 +786,128 @@ class Solution:
             
         return isMirror(root.left, root.right)
 ```
+5. Longest Palindromic Substring
+
+Given a string s, return the longest palindromic substring in s.
+
+Example 1:\
+Input: s = "babad"\
+Output: "bab"\
+Explanation: "aba" is also a valid answer.
+
+Example 2:\
+Input: s = "cbbd"\
+Output: "bb"
+ 
+```python
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        psub = s[0]
+        if len(s)>=2 and s[0] ==s[1]:
+            psub = s[0:2]
+        
+        for i in range(1,len(s)-1):
+            # 如果是奇數回文
+            if s[i-1] == s[i+1]:
+                left = i-1
+                right = i+1
+                while right<len(s) and left >=0 and s[left] == s[right]:
+                    if len(s[left:right+1]) > len(psub):
+                        psub = s[left:right+1]
+                    left-=1
+                    right+=1
+            # 如果是偶數回文
+            if s[i] == s[i+1]:
+                left = i
+                right = i+1
+                while right<len(s) and left >=0 and s[left] == s[right]:
+                    if len(s[left:right+1]) > len(psub):
+                        psub = s[left:right+1]
+                    left-=1
+                    right+=1
+            
+        return psub
+```
+## 104. Maximum Depth of Binary Tree
+
+Given the root of a binary tree, return its maximum depth.
+
+A binary tree's maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
+
+Example 1:\
+![alt text](image-4.png)
+Input: root = [3,9,20,null,null,15,7]\
+Output: 3
+
+Example 2:\
+Input: root = [1,null,2]\
+Output: 2
+
+### 解答
+```python
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        def Depth(root) ->int:
+            if not root:
+                return 0
+            leftDepth = Depth(root.left)
+            rightDepth = Depth(root.right)
+            return max(leftDepth,rightDepth)+ 1
+        return Depth(root)
+```
+
+## 70. Climbing Stairs
+You are climbing a staircase. It takes n steps to reach the top.
+Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
+
+Example 1:
+Input: n = 2
+Output: 2
+Explanation: There are two ways to climb to the top.
+1. 1 step + 1 step
+2. 2 steps
+
+Example 2:
+Input: n = 3
+Output: 3
+Explanation: There are three ways to climb to the top.
+1. 1 step + 1 step + 1 step
+2. 1 step + 2 steps
+3. 2 steps + 1 step
+
+### 解題方法
+可以用迭代的但會超出時間\
+`f(n) = f(n-1) + f(n-2)`
+```python
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        if n <= 1:
+            return 1
+        return self.climbStairs(n-1)+self.climbStairs(n-2)
+```
+
+### 解答
+```python
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        
+        if n == 1:
+            return 1
+        if n == 2:
+            return 2
+        
+        stair1 = 1
+        stair2 = 2
+        current = 0
+        for i in range(3,n+1):
+            current = stair1 + stair2
+            stair1 = stair2
+            stair2 = current
+        return current
+```
