@@ -914,3 +914,103 @@ class Solution:
             stair2 = current
         return current
 ```
+## 6. Zigzag Conversion
+The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)
+
+P   A   H   N\
+A P L S I I G\
+Y   I   R\
+And then read line by line: "PAHNAPLSIIGYIR"\
+Write the code that will take a string and make this conversion given a number of rows:\
+string convert(string s, int numRows);
+ 
+Example 1:\
+Input: s = "PAYPALISHIRING", numRows = 3\
+Output: "PAHNAPLSIIGYIR"
+
+Example 2:\
+Input: s = "PAYPALISHIRING", numRows = 4\
+Output: "PINALSIGYAHRPI"\
+Explanation:\
+P     I    N\
+A   L S  I G\
+Y A   H R\
+P     I
+
+Example 3:\
+Input: s = "A", numRows = 1\
+Output: "A"
+
+```python
+class Solution:
+    def convert(self, s: str, numRows: int) -> str:
+        if numRows == 1 or numRows>len(s):
+            return s
+        # 創建一個大小為 numRows 的列表
+        z1 = [""]*numRows
+        j = 1
+        #當前的行號
+        current_row = 0
+        for i in s:
+            z1[current_row]+=i
+            if current_row == numRows-1:
+                j = -1 
+            elif current_row == 0:
+                j = 1 
+            current_row += j
+        return ''.join(z1)
+                
+```
+## 27. Remove Element
+
+Example 1:\
+Input: nums = [3,2,2,3], val = 3\
+Output: 2, nums = [2,2,_,_]\
+Explanation: Your function should return k = 2, with the first two elements of nums being 2.\
+It does not matter what you leave beyond the returned k (hence they are underscores).
+
+Example 2:\
+Input: nums = [0,1,2,2,3,0,4,2], val = 2\
+Output: 5, nums = [0,1,4,0,3,_,_,_]\
+Explanation: Your function should return k = 5, with the first five elements of nums containing 0, 0, 1, 3, and 4.\
+Note that the five elements can be returned in any order.\
+It does not matter what you leave beyond the returned k (hence they are underscores).
+
+### 解答
+
+```python
+class Solution:
+    def removeElement(self, nums: List[int], val: int) -> int:
+        # 雙指針
+        k = 0
+        for i in nums:
+            if i!=val:
+                nums[k] = i
+                k+=1
+        return k
+```
+
+## 28. Find the Index of the First Occurrence in a String
+
+Example 1:\
+Input: haystack = "sadbutsad", needle = "sad"\
+Output: 0\
+Explanation: "sad" occurs at index 0 and 6.\
+The first occurrence is at index 0, so we return 0.
+
+Example 2:\
+Input: haystack = "leetcode", needle = "leeto"\
+Output: -1\
+Explanation: "leeto" did not occur in "leetcode", so we return -1.
+
+### 解答
+```python
+class Solution:
+    def strStr(self, haystack: str, needle: str) -> int:
+        # slide window 注意索引值範圍
+        for right in range(len(needle)-1,len(haystack)):
+            left = right-(len(needle)-1)
+            if haystack[left:right+1] == needle:
+                return left
+        return -1
+```
