@@ -1014,3 +1014,354 @@ class Solution:
                 return left
         return -1
 ```
+## 8. String to Integer (atoi)
+
+### 解答
+
+```python
+class Solution:
+    def myAtoi(self, s: str) -> int:
+        i = 0
+        n = len(s)
+        # 忽略前導空白字符
+        while i < n and s[i] == ' ':
+            i += 1
+        # 如果已經到達字符串末尾，返回 0
+        if i == n:
+            return 0
+        
+        # 處理符號
+        sign = 1
+        if s[i] == '+':
+            i += 1
+        elif s[i] == '-':
+            sign = -1
+            i += 1
+        
+        # 轉換數字
+        result = 0
+        while i < n and s[i].isdigit():
+            result = result * 10 + int(s[i])
+            i += 1
+        
+        # 應用符號
+        result *= sign
+        
+        # 結果的範圍限制
+        INT_MAX = 2**31 - 1
+        INT_MIN = -2**31
+        if result > INT_MAX:
+            return INT_MAX
+        elif result < INT_MIN:
+            return INT_MIN
+        
+        return result
+``` 
+## 58. Length of Last Word
+
+Example 1:\
+Input: s = "Hello World"\
+Output: 5\
+Explanation: The last word is "World" with length 5.
+
+Example 2:\
+Input: s = "   fly me   to   the moon  "\
+Output: 4\
+Explanation: The last word is "moon" with length 4.
+
+Example 3:\
+Input: s = "luffy is still joyboy"\
+Output: 6\
+Explanation: The last word is "joyboy" with length 6.
+
+### 解答
+```python
+class Solution:
+    def lengthOfLastWord(self, s: str) -> int:
+        s = s.rstrip()
+        length = 0
+        i = len(s)-1
+        while i >= 0 and s[i] !=" ":
+            length+=1
+            i -= 1
+    
+        return length
+```
+
+## 66. Plus One
+
+Example 1:\
+Input: digits = [1,2,3]\
+Output: [1,2,4]\
+Explanation: The array represents the integer 123.\
+Incrementing by one gives 123 + 1 = 124.\
+Thus, the result should be [1,2,4].
+
+Example 2:\
+Input: digits = [4,3,2,1]\
+Output: [4,3,2,2]\
+Explanation: The array represents the integer 4321.\
+Incrementing by one gives 4321 + 1 = 4322.\
+Thus, the result should be [4,3,2,2].
+
+Example 3:\
+Input: digits = [9]\
+Output: [1,0]\
+Explanation: The array represents the integer 9.\
+Incrementing by one gives 9 + 1 = 10.\
+Thus, the result should be [1,0].
+
+```python
+class Solution:
+    def plusOne(self, digits: List[int]) -> List[int]:
+        i = len(digits) -1
+        curry = 1
+        while i >= 0 and curry:
+            digits[i] += curry
+            curry = 0
+            if digits[i] == 10:
+                digits[i] = 0
+                curry = 1
+            i -= 1
+        # 處理最大位數進位
+        if digits[0] == 0:
+            digits == [1] + digits
+            digits.insert(0,1)
+
+        return digits
+```
+
+## 11. Container With Most Water
+You are given an integer array height of length n. There are n vertical lines drawn such that the two endpoints of the ith line are (i, 0) and (i, height[i]).
+
+Find two lines that together with the x-axis form a container, such that the container contains the most water.
+
+Return the maximum amount of water a container can store.
+
+Notice that you may not slant the container.
+
+Example 1:\
+![alt text](image-5.png)\
+Input: height = [1,8,6,2,5,4,8,3,7]\
+Output: 49\
+Explanation: The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. In this case, the max area of water (blue section) the container can contain is 49.
+
+Example 2:\
+Input: height = [1,1]\
+Output: 
+
+```python
+class Solution:
+    def maxArea(self, height: List[int]) -> int:
+        left = 0
+        right = len(height) - 1
+        area = 0
+
+        while left < right:
+            now = (right - left) * min(height[left], height[right])
+            if area < now:
+                area = now
+            if height[left] < height[right]:
+                left += 1
+            else:
+                right -= 1
+        return area
+```
+
+## 69. Sqrt(x)
+
+Given a non-negative integer x, return the square root of x rounded down to the nearest integer. The returned integer should be non-negative as well.
+
+You must not use any built-in exponent function or operator.
+
+For example, do not use pow(x, 0.5) in c++ or x ** 0.5 in python.
+ 
+
+Example 1:\
+Input: x = 4\
+Output: 2\
+Explanation: The square root of 4 is 2, so we return 2.
+
+Example 2:\
+Input: x = 8\
+Output: 2\
+Explanation: The square root of 8 is 2.82842..., and since we round it down to the nearest integer, 2 is returned.
+
+```python
+class Solution:
+    def mySqrt(self, x: int) -> int:
+        if x == 0 or x == 1:
+            return x
+        left = 0
+        right = x
+        while right >= left:
+            mid = (left + right) // 2
+            if mid**2 == x:
+                return mid
+            elif mid**2>x:
+                right = mid-1
+            else:
+                left = mid +1  
+        return right
+```
+
+## 88. Merge Sorted Array
+
+Example 1:
+Input: nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3\
+Output: [1,2,2,3,5,6]\
+Explanation: The arrays we are merging are [1,2,3] and [2,5,6].
+The result of the merge is [1,2,2,3,5,6] with the underlined elements\ coming from nums1.
+
+Example 2:\
+Input: nums1 = [1], m = 1, nums2 = [], n = 0\
+Output: [1]\
+Explanation: The arrays we are merging are [1] and [].\
+The result of the merge is [1].
+
+Example 3:\
+Input: nums1 = [0], m = 0, nums2 = [1], n = 1\
+Output: [1]\
+Explanation: The arrays we are merging are [] and [1].\
+The result of the merge is [1].\
+Note that because m = 0, there are no elements in nums1. The 0 is only there to ensure the merge result can fit in nums1.
+
+### 解題方法
+使用三個指針
+
+### 解答
+```python
+class Solution:
+    def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
+        """
+        Do not return anything, modify nums1 in-place instead.
+        """
+        # 指向nums1最後一個元素
+        i = m - 1
+        # 指向nums2最後一個元素
+        j = n - 1
+        # 指向nums1最後一個索引
+        k = m + n - 1
+
+        # 比較大小
+        while j>=0 and i>=0:
+            if nums1[i] > nums2[j]:
+                nums1[k] = nums1[i]
+                i-=1
+            else:
+                nums1[k] = nums2[j]
+                j-=1
+            k-=1
+        # 如果還有nums2[j] <nums1[i]
+        while j>=0:
+                nums1[k] = nums2[j]
+                k-=1
+                j-=1
+                
+```
+## 94. Binary Tree Inorder Traversal
+
+Given the root of a binary tree, return the inorder traversal of its nodes' values.
+
+Example 1:\
+Input: root = [1,null,2,3]\
+Output: [1,3,2]\
+Explanation:
+![alt text](image-6.png)
+
+Example 2:\
+Input: root = [1,2,3,4,5,null,8,null,null,6,7,9]\
+Output: [4,2,6,5,7,1,3,9,8]\
+Explanation:
+![alt text](image-7.png)
+
+Example 3:\
+Input: root = []\
+Output: []
+
+Example 4:
+Input: root = [1]
+Output: [1]
+
+### 解提方法：
+迭代＋stack
+
+### 解答
+```python
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        current = root
+        stack = []
+        ans = []
+        while current or stack:
+            # 將當前節點及其左子樹壓入stack
+            while current:
+                stack.append(current)
+                current = current.left
+            # 如果左子樹為空處理右子樹
+            current = stack.pop()
+            ans.append(current.val)
+            current = current.right
+        return ans
+```
+## 12. Integer to Roman
+
+Seven different symbols represent Roman numerals with the following values:
+
+|Symbol|   Value|
+|------|--------|
+|I     |       1|
+|V     |       5|
+|X     |      10|
+|L     |      50|
+|C     |     100|
+|D     |     500|
+|M     |    1000|\
+
+Roman numerals are formed by appending the conversions of decimal place values from highest to lowest. Converting a decimal place value into a Roman numeral has the following rules:
+4 (IV), 9 (IX), 40 (XL), 90 (XC), 400 (CD) and 900 (CM).
+
+Example 1:\
+Input: num = 3749\
+Output: "MMMDCCXLIX"
+Explanation:\
+3000 = MMM as 1000 (M) + 1000 (M) + 1000 (M)\
+ 700 = DCC as 500 (D) + 100 (C) + 100 (C)\
+  40 = XL as 10 (X) less of 50 (L)\
+   9 = IX as 1 (I) less of 10 (X)\
+Note: 49 is not 1 (I) less of 50 (L) because the conversion is based on decimal places
+
+Example 2:\
+Input: num = 58\
+Output: "LVIII"
+
+Example 3\
+Input: num = 1994\
+Output: "MCMXCIV"
+
+### 解答
+```python
+class Solution:
+    def intToRoman(self, num: int) -> str:
+        roman={
+            1000: 'M', 900: 'CM',
+            500: 'D',  400: 'CD',
+            100: 'C',  90: 'XC',
+            50: 'L',   40: 'XL',
+            10: 'X',   9: 'IX',
+            5: 'V',    4: 'IV',
+            1: 'I'
+        }
+        ans = ''
+        for i in [1000, 900, 500, 400, 100, 50, 40, 10, 9, 5, 4, 1]:
+            while num >= i:
+                num -=n
+                ans += roman[i]
+        return ans
+```
