@@ -1365,3 +1365,138 @@ class Solution:
                 ans += roman[i]
         return ans
 ```
+
+## 100. Same Tree
+
+Given the roots of two binary trees p and q, write a function to check if they are the same or not.\
+Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.
+
+Example 1:\
+![alt text](image-9.png)
+Input: p = [1,2,3], q = [1,2,3]\
+Output: true
+
+Example 2:\
+![alt text](image-8.png)
+Input: p = [1,2], q = [1,null,2]\
+Output: false
+
+Example 3:\
+![alt text](image-10.png)
+Input: p = [1,2,1], q = [1,1,2]\
+Output: false
+
+### 解答(迭代)
+```python
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+        stack = []
+        stack.append(p, q)
+        while stack:
+            current_p, current_q = stack.pop()
+            if current_p != current_q:
+                return False
+            if not current_p or not current_q:
+                return False
+            if not current_p and not current_q:
+                continue
+    
+            stack.append(current_p.left, current_q.left)
+            stack.append(current_p.right, current_q.right)
+        return True
+```
+### 解答(遞迴)
+```python
+class Solution
+    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+        if p != q:
+            return False
+        if not p or not q:
+            return False
+        if not p and not q:
+            return True
+        return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+```                
+
+108. Convert Sorted Array to Binary Search Tree
+
+Given an integer array nums where the elements are sorted in ascending order, convert it to a height-balanced binary search tree.
+
+Example 1:\
+![alt text](image-11.png)
+![alt text](image-12.png)
+Input: nums = [-10,-3,0,5,9]\
+Output: [0,-3,9,-10,null,5]\
+Explanation: [0,-10,5,null,-3,null,9] is also accepted:
+
+Example 2:\
+![alt text](image-13.png)
+Input: nums = [1,3]\
+Output: [3,1]\
+Explanation: [1,null,3] and [3,1] are both height-balanced BSTs.
+
+### 解答(遞迴)
+```python
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def sortedArrayToBST(self, nums: List[int]) -> Optional[TreeNode]:
+        left = 0
+        left = 0
+        right = len(nums)
+        mid = (left+ right)//2
+        if not nums:
+            return None
+        return  TreeNode(nums[mid],self.sortedArrayToBST(nums[left:mid]),self.sortedArrayToBST(nums[mid+1:right+1]))
+```
+
+## 16. 3Sum Closest
+
+Given an integer array nums of length n and an integer target, find three integers in nums such that the sum is closest to target.\
+Return the sum of the three integers.\
+You may assume that each input would have exactly one solution.
+
+Example 1:\
+Input: nums = [-1,2,1,-4], target = 1\
+Output: 2\
+Explanation: The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
+
+Example 2:\
+Input: nums = [0,0,0], target = 1\
+Output: 0\
+Explanation: The sum that is closest to the target is 0. (0 + 0 + 0 = 0).
+
+### 解答
+```python
+class Solution:
+    def threeSumClosest(self, nums: List[int], target: int) -> int:
+        nums = sorted(nums)
+        total = sum(nums[:3])
+        ans = total
+        for i in range(len(nums)):
+            left = i+1
+            right = len(nums)-1
+            if i>0 and nums[i] == nums[i-1]:
+                continue
+            while left < right:
+                total = nums[i]+nums[left]+nums[right]
+                if abs(total-target)< abs(ans-target):
+                    ans = total
+                if total>target:
+                    right -= 1
+                elif total == target:
+                    return total
+                else:
+                    left+=1
+        return ans
+```
