@@ -461,7 +461,7 @@ Explanation: The only possible triplet sums up to 0.
 ### 解題方法(med.)
 捕魚法，不要用2sum找補數會漏找
 
-## 解答
+### 解答
 ```python
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
@@ -617,7 +617,7 @@ Output: "10101"
 ### 解方法
 注意方向索引值最大的是個位數
 
-## 解答
+### 解答
 ```python
 class Solution:
     def addBinary(self, a: str, b: str) -> str:
@@ -1499,4 +1499,139 @@ class Solution:
                 else:
                     left+=1
         return ans
+```
+
+## 110. Balanced Binary Tree
+Given a binary tree, determine if it is height-balanced
+
+Example 1:\
+![alt text](image-14.png)
+Input: root = [3,9,20,null,null,15,7]\
+Output: true
+
+Example 2:\
+![alt text](image-15.png)
+Input: root = [1,2,2,3,3,null,null,4,4]\
+Output: false
+
+Example 3:
+Input: root = []
+Output: true
+
+### 解答
+```python
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isBalanced(self, root: Optional[TreeNode]) -> bool:
+            _,balance = self.Height(root)
+            return balance
+    def Height(self, root:Optional[TreeNode]):
+        if not root:
+            return (0, True)
+        left, leftb = self.Height(root.left)
+        right, rightb = self.Height(root.right)
+        current = mix(left, right)+1
+        isbalance = leftb and rightb and abs(left-right) <=1
+
+        return current, isbalance
+```
+
+## 111. Minimum Depth of Binary Tree
+
+Given a binary tree, find its minimum depth.\
+The minimum depth is the number of nodes along the shortest path from the root node down to the nearest leaf node.\
+Note: A leaf is a node with no children.
+
+Example 1:\
+![alt text](image-16.png)
+Input: root = [3,9,20,null,null,15,7]\
+Output: 2
+
+Example 2:\
+Input: root = [2,null,3,null,4,null,5,null,6]\
+Output: 5
+
+### 解答
+```python
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def minDepth(self, root: Optional[TreeNode]) -> int:
+        if not root:
+            return 0
+        left = self.minDepth(root.left)
+        right = self.minDepth(root.right)
+        
+        if left == 0:
+            right+=1
+        if right == 0:
+            left+=1
+        
+        return min(left,right) + 1
+```
+
+## 29. Divide Two Integers
+
+Given two integers dividend and divisor, divide two integers without using multiplication, division, and mod operator.\
+
+Return the quotient after dividing dividend by divisor.
+
+Note: integers within the 32-bit signed integer range: [−231, 231 − 1]. For this problem, if the quotient is strictly greater than 231 - 1, then return 231 - 1, and if the quotient is strictly less than -231, then return -231.
+
+ 
+
+Example 1:\
+Input: dividend = 10, divisor = 3\
+Output: 3\
+Explanation: 10/3 = 3.33333.. which is truncated to 3.
+
+Example 2:\
+Input: dividend = 7, divisor = -3\
+Output: -2\
+Explanation: 7/-3 = -2.33333.. which is truncated to -2.
+
+
+### 解答
+```python
+class Solution:
+    def divide(self, dividend: int, divisor: int) -> int:
+        INT_MAX = 2**31 - 1
+        INT_MIN = -2**31
+        # 邊界情况
+        if dividend == 0:
+            return 0
+        if dividend == INT_MIN and divisor == -1:
+            return INT_MAX  # 防止溢出
+        # 確定結果的符號
+        negative = (dividend < 0) != (divisor < 0)
+        # 使用絕對值進行計算
+        dividend = abs(dividend)
+        divisor = abs(divisor)
+        # 初始化商
+        quotient = 0
+        # 計算最大位移量
+        while dividend >= divisor:
+        # 重置當前倍數和位移量
+            current_divisor = divisor
+            multiple = 1
+            # 繼續擴大除數倍數，直到超過被除數
+            while dividend >= (current_divisor << 1):
+                current_divisor <<= 1
+                multiple <<= 1
+            # 更新被除數和商
+            dividend -= current_divisor
+            quotient += multiple
+        # 根據結果的符號調整商的符號
+        if negative:
+            quotient = -quotient
+        return quotient
 ```
