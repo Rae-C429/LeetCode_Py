@@ -14,7 +14,6 @@ class Solution:
             '8': "tuv",
             '9': "wxyz"
                     }
-        
         # ref: gpt
         def backtrack(index, path):
             if index == len(digits):
