@@ -17,9 +17,9 @@ class Solution(object):
         # 創建字典
         num_map = {}
         # 檢查nums list裡的元素有沒有相加等於target的
-        for i, num in enurmerate(nums):
+        for i, num in enumerate(nums):
             complement = target - num # 計算當前補數
-            if complement in num_map:# 檢查補數市府在num_map字典裡
+            if complement in num_map:# 檢查補數是否在num_map字典裡
             # 如果補數存在字典裡，回傳補數對應的索引和當前數字索引
                 return [num_map[complement], i]
             # 如果不存在，儲存當前數字和索引於字典裡
@@ -562,7 +562,7 @@ class Solution:
         return maxSum = nums[0]
 ```
 
-### 83. Remove Duplicates from Sorted List
+## 83. Remove Duplicates from Sorted List
 Given the head of a sorted linked list, delete all duplicates such that each element appears only once. Return the linked list sorted as well.
 
 Example 1:\
