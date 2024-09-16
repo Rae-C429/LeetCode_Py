@@ -1148,7 +1148,7 @@ Explanation: The above vertical lines are represented by array [1,8,6,2,5,4,8,3,
 
 Example 2:\
 Input: height = [1,1]\
-Output: 
+Output: 1
 
 ```python
 class Solution:
@@ -1259,6 +1259,7 @@ class Solution:
                 j-=1
                 
 ```
+
 ## 94. Binary Tree Inorder Traversal
 
 Given the root of a binary tree, return the inorder traversal of its nodes' values.
@@ -1296,20 +1297,19 @@ Output: [1]
 #         self.right = right
 class Solution:
     def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
-        current = root
-        stack = []
-        ans = []
-        while current or stack:
-            # 將當前節點及其左子樹壓入stack
-            while current:
-                stack.append(current)
-                current = current.left
-            # 如果左子樹為空處理右子樹
-            current = stack.pop()
-            ans.append(current.val)
-            current = current.right
-        return ans
+        result = []
+        def inorder(root):
+            if not root:
+                return
+            inorder(root.left)
+            result.append(root.val)
+            inorder(root.right)
+        
+        inorder(root)
+        return result
+        
 ```
+
 ## 12. Integer to Roman
 
 Seven different symbols represent Roman numerals with the following values:
@@ -1386,7 +1386,7 @@ Example 3:\
 Input: p = [1,2,1], q = [1,1,2]\
 Output: false
 
-### 解答(迭代)
+### 解答
 ```python
 # Definition for a binary tree node.
 # class TreeNode:
@@ -1396,35 +1396,20 @@ Output: false
 #         self.right = right
 class Solution:
     def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
-        stack = []
-        stack.append(p, q)
-        while stack:
-            current_p, current_q = stack.pop()
-            if current_p != current_q:
-                return False
-            if not current_p or not current_q:
-                return False
-            if not current_p and not current_q:
-                continue
-    
-            stack.append(current_p.left, current_q.left)
-            stack.append(current_p.right, current_q.right)
-        return True
-```
-### 解答(遞迴)
-```python
-class Solution
-    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
-        if p != q:
-            return False
-        if not p or not q:
-            return False
-        if not p and not q:
+        # ref gpt
+        # 如果兩個節點都為空，返回 True
+        if (not p) and (not q):
             return True
+        # 如果其中一個節點為空，另一個不是，返回 False
+        if (not p) or (not q):
+            return False
+         # 如果兩個節點的值不相等，返回 False
+        if p.val != q.val:
+            return False
         return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
 ```                
 
-108. Convert Sorted Array to Binary Search Tree
+## 108. Convert Sorted Array to Binary Search Tree
 
 Given an integer array nums where the elements are sorted in ascending order, convert it to a height-balanced binary search tree.
 
@@ -1451,13 +1436,16 @@ Explanation: [1,null,3] and [3,1] are both height-balanced BSTs.
 #         self.right = right
 class Solution:
     def sortedArrayToBST(self, nums: List[int]) -> Optional[TreeNode]:
-        left = 0
-        left = 0
-        right = len(nums)
-        mid = (left+ right)//2
         if not nums:
             return None
-        return  TreeNode(nums[mid],self.sortedArrayToBST(nums[left:mid]),self.sortedArrayToBST(nums[mid+1:right+1]))
+        
+        left = 0
+        right = len(nums)
+        mid = (left+right)//2
+        root = TreeNode(nums[mid])
+        root.left = self.sortedArrayToBST(nums[left:mid])
+        root.right = self.sortedArrayToBST(nums[mid+1:right])
+        return root
 ```
 
 ## 16. 3Sum Closest
@@ -1480,25 +1468,36 @@ Explanation: The sum that is closest to the target is 0. (0 + 0 + 0 = 0).
 ```python
 class Solution:
     def threeSumClosest(self, nums: List[int], target: int) -> int:
+        # 先對數組排序
         nums = sorted(nums)
-        total = sum(nums[:3])
-        ans = total
-        for i in range(len(nums)):
+        n = len(nums)
+        # 初始化 sum3 為前三個數字的和
+        sum3 = sum(nums[:3])
+        currentSum = 0
+
+        # 開始遍歷數組
+        for i in range(n):
             left = i+1
-            right = len(nums)-1
-            if i>0 and nums[i] == nums[i-1]:
-                continue
+            right = n-1
+            
+            # 使用雙指針進行搜索
             while left < right:
-                total = nums[i]+nums[left]+nums[right]
-                if abs(total-target)< abs(ans-target):
-                    ans = total
-                if total>target:
-                    right -= 1
-                elif total == target:
-                    return total
-                else:
+                currentSum  = nums[i] + nums[left] + nums[right]
+
+                # 使用雙指針進行搜索
+                if abs(currentSum - target) < abs(sum3 - target):
+                    sum3 = currentSum
+    
+                # 調整雙指針
+                if currentSum < target:
                     left+=1
-        return ans
+                elif currentSum > target:
+                    right-=1
+                    
+                # 如果等於目標值，直接返回
+                else :
+                    return target
+        return sum3
 ```
 
 ## 110. Balanced Binary Tree
@@ -1528,17 +1527,17 @@ Output: true
 #         self.right = right
 class Solution:
     def isBalanced(self, root: Optional[TreeNode]) -> bool:
-            _,balance = self.Height(root)
-            return balance
-    def Height(self, root:Optional[TreeNode]):
+        _, balanced = self.deep(root)
+        return balanced
+    def deep(self,root):
         if not root:
-            return (0, True)
-        left, leftb = self.Height(root.left)
-        right, rightb = self.Height(root.right)
-        current = mix(left, right)+1
-        isbalance = leftb and rightb and abs(left-right) <=1
+            return 0, True
+        leftHeight, leftBalance = self.deep(root.left)
+        rightHeight, rightBalance = self.deep(root.right)
 
-        return current, isbalance
+        currentBalance = leftBalance and rightBalance and (abs(leftHeight - rightHeight) <=1)
+
+        return max(leftHeight,rightHeight)+1, currentBalance
 ```
 
 ## 111. Minimum Depth of Binary Tree
@@ -1599,41 +1598,38 @@ Input: dividend = 7, divisor = -3\
 Output: -2\
 Explanation: 7/-3 = -2.33333.. which is truncated to -2.
 
-
 ### 解答
 ```python
 class Solution:
     def divide(self, dividend: int, divisor: int) -> int:
-        INT_MAX = 2**31 - 1
-        INT_MIN = -2**31
-        # 邊界情况
         if dividend == 0:
             return 0
-        if dividend == INT_MIN and divisor == -1:
-            return INT_MAX  # 防止溢出
         # 確定結果的符號
-        negative = (dividend < 0) != (divisor < 0)
+        neg = (dividend < 0) != (divisor < 0)
         # 使用絕對值進行計算
         dividend = abs(dividend)
         divisor = abs(divisor)
-        # 初始化商
         quotient = 0
-        # 計算最大位移量
         while dividend >= divisor:
-        # 重置當前倍數和位移量
-            current_divisor = divisor
             multiple = 1
-            # 繼續擴大除數倍數，直到超過被除數
-            while dividend >= (current_divisor << 1):
-                current_divisor <<= 1
+            currentdivisor = divisor
+            while dividend >= (currentdivisor << 1):
+                # 一次增加2倍
+                currentdivisor <<= 1
+                # 計算倍數
                 multiple <<= 1
-            # 更新被除數和商
-            dividend -= current_divisor
+            dividend -= currentdivisor
+            print('dividend',dividend)
             quotient += multiple
-        # 根據結果的符號調整商的符號
-        if negative:
+        print(2**31-1)
+        if neg:
             quotient = -quotient
-        return quotient
+        if quotient > 2**31-1:
+            return 2**31-1
+        if quotient < -2**31:
+            return -2**31
+        
+        return  quotient 
 ```
 
 ## 112. Path Sum
