@@ -201,8 +201,13 @@ class Solution:
     def longestCommonPrefix(self, strs: List[str]) -> str:
         if strs is None:
             return ""
+        # 字串排序
         strs = sorted(strs)
+
+        # 創建空自創儲存相通字串
         prefix = ""
+
+        # 比較第一個與最後一個字串
         first = strs[0]
         last = strs[-1]
         for i in range(min(len(first),len(last))):
@@ -346,7 +351,7 @@ class Solution:
         # 創建一個ListNode用來儲存整理好的資料
         dummy = ListNode(0)
         current = dummy # 將指針指向虛頭
- 
+        # 比較兩個list中的值
         while list1 and list2:
             if list1.val < list2.val:
                 current.next = list1
@@ -355,6 +360,7 @@ class Solution:
                 current.next = list2
                 list2 = list2.next 
             current = current.next
+        # 將 next 指向剩餘的list
         if list1:
             current.next = list1
         elif list2:
@@ -378,7 +384,7 @@ Explanation: Your function should return k = 5, with the first five elements of 
 It does not matter what you leave beyond the returned k (hence they are underscores).
 
 ### 解題想法
-與 Longest Substring Without Repeating Character
+利用雙指針
 
 ### 解答
 ```python
@@ -412,7 +418,7 @@ Output: 21
 ```python
 class Solution:
     def reverse(self, x: int) -> int:
-        n =  abs(x) if x < 0 else x
+        n =  abs(x) 
         rev = 0
         while n:
             rev = rev * 10 + n % 10
@@ -425,6 +431,7 @@ class Solution:
 ```
 
 ## 15. 3Sum
+
 Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
 
 Notice that the solution set must not contain duplicate triplets.
@@ -522,7 +529,9 @@ class Solution:
                 return mid
         return left
 ```
+
 ## 53. Maximum Subarray
+
 Given an integer array nums, find the subarray with the largest sum, and return its sum.
 
 Example 1:
@@ -550,7 +559,7 @@ class Solution:
         for num in nums[1:]:
             currentSum = max(num, currentSum+num)
             maxSum = max(maxSum,currentSum)
-        return maxSum = nums[0]
+        return maxSum 
 ```
 
 ## 83. Remove Duplicates from Sorted List
@@ -587,10 +596,8 @@ class Solution:
             if current.next.val  == current.val:
                 current.next = current.next.next
 
-            elif current.next.val != current.val:
+            else:
                 current = current.next
-        
-            
         return head
 ```
 
