@@ -60,24 +60,9 @@ def isPalindrome(self, x:int) -> bool:
     return reverseX == x
 ```
 
-### 方法二：反轉一半數字
-```python
-def isPalindrome(self, x:int) -> bool:
-    # 檢查數字是否小於0或結尾是0的數
-    if x <= 0 or  (x % 10 == 0 and x !=0):
-        return False
-    # 反轉數字
-    reverseHalf = 0
-    temp = x
-    while temp > reverseHalf:
-        digit = temp % 10
-        reverseHalf = reverseHalf * 10 + digit
-        temp //= 10  
-    # 當數字長度為奇數時，reverseHalf // 10 去掉中間數字
-    return reverseHalf == temp or reverseHalf == temp // 10
-```
-
 ## 13. Roman to Integer
+Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.
+
 |Symbol|   Value|
 |------|--------|
 |I     |       1|
@@ -88,6 +73,12 @@ def isPalindrome(self, x:int) -> bool:
 |D     |     500|
 |M     |    1000|
 
+For example, 2 is written as II in Roman numeral, just two ones added together. 12 is written as XII, which is simply X + II. The number 27 is written as XXVII, which is XX + V + II.
+
+- I can be placed before V (5) and X (10) to make 4 and 9. 
+- X can be placed before L (50) and C (100) to make 40 and 90. 
+- C can be placed before D (500) and M (1000) to make 400 and 900.
+
 Example 1:\
 Input: s = "III" =>1+1+1\
 Output: 3
@@ -95,6 +86,7 @@ Output: 3
 Example 2:\
 Input: s = "LVIII"=>3+5+10\
 Output: 58\
+
 題目要求將提供的羅馬數字(`string`)成阿拉伯數字(`int`)，在羅馬字中出小數出線在前面時代表要用減的 ex:IV = 5-1 =4
 
 ### 解題想法
@@ -184,7 +176,6 @@ class Solution:
                 current.next = ListCode(carry)
                 
             return dummyHead.next
-
 ```
 
 ## 14. Longest Common Prefix
@@ -1008,12 +999,14 @@ Explanation: "leeto" did not occur in "leetcode", so we return -1.
 class Solution:
     def strStr(self, haystack: str, needle: str) -> int:
         # slide window 注意索引值範圍
-        for right in range(len(needle)-1,len(haystack)):
-            left = right-(len(needle)-1)
-            if haystack[left:right+1] == needle:
+        n = len(needle) 
+        for right in range(n-1, len(haystack)):
+            left = right - (n - 1)
+            if  haystack[left:right + 1] == needle:
                 return left
         return -1
 ```
+
 ## 8. String to Integer (atoi)
 
 ### 解答
@@ -1040,6 +1033,7 @@ class Solution:
         
         # 轉換數字
         result = 0
+        # ref https://www.geeksforgeeks.org/python-extract-numbers-from-string/
         while i < n and s[i].isdigit():
             result = result * 10 + int(s[i])
             i += 1
@@ -1057,6 +1051,7 @@ class Solution:
         
         return result
 ``` 
+
 ## 58. Length of Last Word
 
 Example 1:\
@@ -1078,14 +1073,14 @@ Explanation: The last word is "joyboy" with length 6.
 ```python
 class Solution:
     def lengthOfLastWord(self, s: str) -> int:
+        # 移除最後面空格
         s = s.rstrip()
-        length = 0
-        i = len(s)-1
-        while i >= 0 and s[i] !=" ":
-            length+=1
-            i -= 1
-    
-        return length
+        n = len(s) - 1
+        lastLen = 0
+        while n >= 0 and s[n] != ' ':
+            n -=1
+            lastLen += 1
+        return lastLen
 ```
 
 ## 66. Plus One
@@ -1114,20 +1109,19 @@ Thus, the result should be [1,0].
 ```python
 class Solution:
     def plusOne(self, digits: List[int]) -> List[int]:
-        i = len(digits) -1
-        curry = 1
-        while i >= 0 and curry:
-            digits[i] += curry
-            curry = 0
-            if digits[i] == 10:
-                digits[i] = 0
-                curry = 1
-            i -= 1
+        n = len(digits) - 1
+        carry = 1
+        while n >= 0 and carry == 1:
+            digits[n] += carry
+            carry = 0
+            if digits[n] == 10:
+                digits[n] = 0
+                n -= 1
+                carry = 1
         # 處理最大位數進位
         if digits[0] == 0:
-            digits == [1] + digits
-            digits.insert(0,1)
-
+            # ref https://www.geeksforgeeks.org/python-perform-append-at-beginning-of-list/
+            digits.insert(0, 1)
         return digits
 ```
 

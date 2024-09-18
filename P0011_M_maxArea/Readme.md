@@ -17,7 +17,7 @@ Example 2:\
 Input: height = [1,1]\
 Output: 
 
-## Note:
+### Note:
 - 利用雙指針
 
 ```python
