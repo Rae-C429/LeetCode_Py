@@ -602,6 +602,7 @@ class Solution:
 ```
 
 ## 67. Add Binary
+
 Given two binary strings a and b, return their sum as a binary string.
 
 Example 1:\
@@ -634,6 +635,7 @@ class Solution:
 
         return "".join(reversed(result))
 ```
+
 ## 19. Remove Nth Node From End of List(med.)
 
 Given the head of a linked list, remove the nth node from the end of the list and return its head.
@@ -680,6 +682,7 @@ class Solution:
 ```
 
 ## 56. Merge Intervals(med.)
+
 Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping intervals, and return an array of the non-overlapping intervals that cover all the intervals in the input.
 
 Example 1:\
@@ -699,7 +702,7 @@ class Solution:
         # 創建堆疊
         stack = []
         intervals = sorted(intervals)
-        # 將第一個子列亞入堆疊
+        # 將第一個子列壓入堆疊
         stack.append(intervals[0])
         for i in range(1,len(intervals)):
             # 當前[start,end]
@@ -708,7 +711,6 @@ class Solution:
             # stack中top[start,end]
             a1 = stack[-1][0]
             a2 = stack[-1][1]
-            print(a1,a2,b1,b2)
             # 如果重疊
             if a2 >= b1:
                 stack[-1][1] = max(a2, b2)
@@ -784,7 +786,8 @@ class Solution:
             
         return isMirror(root.left, root.right)
 ```
-5. Longest Palindromic Substring
+
+## 5. Longest Palindromic Substring
 
 Given a string s, return the longest palindromic substring in s.
 
