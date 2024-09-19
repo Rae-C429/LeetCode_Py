@@ -804,32 +804,33 @@ Output: "bb"
 ```python
 class Solution:
     def longestPalindrome(self, s: str) -> str:
-        psub = s[0]
-        if len(s)>=2 and s[0] ==s[1]:
-            psub = s[0:2]
+        if not s:
+            return ""
+        def expandAroundCenter(left: int, right: int) -> str:
+            # 擴展回文的核心邏輯
+            while left >= 0 and right < len(s) and s[left] == s[right]:
+                left -= 1
+                right += 1
+            # 當擴展結束時，返回回文子串
+            return s[left + 1:right]
         
-        for i in range(1,len(s)-1):
-            # 如果是奇數回文
-            if s[i-1] == s[i+1]:
-                left = i-1
-                right = i+1
-                while right<len(s) and left >=0 and s[left] == s[right]:
-                    if len(s[left:right+1]) > len(psub):
-                        psub = s[left:right+1]
-                    left-=1
-                    right+=1
-            # 如果是偶數回文
-            if s[i] == s[i+1]:
-                left = i
-                right = i+1
-                while right<len(s) and left >=0 and s[left] == s[right]:
-                    if len(s[left:right+1]) > len(psub):
-                        psub = s[left:right+1]
-                    left-=1
-                    right+=1
+        longest_palindrome = ""
+        
+        for i in range(len(s)):
+            # 奇數長度的回文
+            odd_palindrome = expandAroundCenter(i, i)
+            # 偶數長度的回文
+            even_palindrome = expandAroundCenter(i, i + 1)
             
-        return psub
+            # 更新最長回文子串
+            if len(odd_palindrome) > len(longest_palindrome):
+                longest_palindrome = odd_palindrome
+            if len(even_palindrome) > len(longest_palindrome):
+                longest_palindrome = even_palindrome
+        
+        return longest_palindrome
 ```
+
 ## 104. Maximum Depth of Binary Tree
 
 Given the root of a binary tree, return its maximum depth.
@@ -946,6 +947,7 @@ class Solution:
         return ''.join(z1)
                 
 ```
+
 ## 27. Remove Element
 
 Example 1:\
