@@ -754,6 +754,7 @@ class Solution:
 ```
 
 ## 101. Symmetric Tree
+
 Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
 
 Example 1:\
@@ -864,6 +865,7 @@ class Solution:
 ```
 
 ## 70. Climbing Stairs
+
 You are climbing a staircase. It takes n steps to reach the top.
 Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
 
@@ -896,26 +898,8 @@ class Solution:
         return self.climbStairs(n-1)+self.climbStairs(n-2)
 ```
 
-### 解答
-```python
-class Solution:
-    def climbStairs(self, n: int) -> int:
-        
-        if n == 1:
-            return 1
-        if n == 2:
-            return 2
-        
-        stair1 = 1
-        stair2 = 2
-        current = 0
-        for i in range(3,n+1):
-            current = stair1 + stair2
-            stair1 = stair2
-            stair2 = current
-        return current
-```
 ## 6. Zigzag Conversion
+
 The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)
 
 P   A   H   N\
