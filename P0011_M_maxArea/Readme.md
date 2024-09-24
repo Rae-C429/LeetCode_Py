@@ -19,6 +19,8 @@ Output:
 
 ### Note:
 - 利用雙指針
+- 將左右指針寬度設為最寬
+- 犧牲寬度，將最矮的必替換，看看水量能否提升
 
 ```python
 class Solution:
